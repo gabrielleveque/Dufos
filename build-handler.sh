@@ -20,13 +20,13 @@ fi
 
 if [ "$OPT" == "network" ]; then
     cmake -B build/${OPT} -S ${PATH_TO_NETWORK} -DCMAKE_TOOLCHAIN_FILE=~/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=${OPT}
-    cmake --build build/${OPT} --parallel --target install
+    cmake --build build/${OPT} --parallel
     exit 0
 fi
 
-
 if [ "$OPT" == "clean" ]; then
     rm -rf build/${OPT}
+    rm -rf ${PATH_TO_COMMON}/build
     find . -type f -name '*.dylib' -delete
     find . -type f -name '*.so' -delete
     exit 0

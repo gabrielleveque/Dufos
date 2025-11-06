@@ -7,11 +7,6 @@
 
 #pragma once
 
-
-// #include <network/Enum/Connection.hpp>
-// #include <network/Data/Endpoint.hpp>
-// #include <network/Data/Message.hpp>
-// #include <network/Socket.hpp>
 #include "Enum/Connection.hpp"
 #include "Data/Endpoint.hpp"
 #include "Data/Message.hpp"
