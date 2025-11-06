@@ -7,15 +7,47 @@ template<typename T>
 class ComponentPool
 {
     public:
+        /**
+         * @brief Add a component to the pool.
+         *
+         * @param entityId The ID of the entity.
+         * @param component The component to add.
+         */
         void add(unsigned int entityId, const T& component);
+
+        /**
+         * @brief Remove a component from the pool.
+         *
+         * @param entityId The ID of the entity.
+         */
         void remove(unsigned int entityId);
+
+        /**
+         * @brief Get a component from the pool.
+         *
+         * @param entityId The ID of the entity.
+         * @return The component.
+         */
         T* get(unsigned int entityId);
+
+        /**
+         * @brief Check if the pool has a component.
+         *
+         * @param entityId The ID of the entity.
+         * @return True if the pool has the component.
+         */
         bool has(unsigned int entityId) const;
+
+        /**
+         * @brief Get the size of the pool.
+         *
+         * @return The size of the pool.
+         */
         size_t size() const;
 
     private:
-        std::vector<T> _dense;
-        std::unordered_map<unsigned int, size_t> _sparse;
+        std::vector<T> _dense;                              /*!< The dense array */
+        std::unordered_map<unsigned int, size_t> _sparse;   /*!< The sparse map */
 };
 
 template<typename T>

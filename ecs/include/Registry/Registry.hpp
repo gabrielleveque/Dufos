@@ -9,30 +9,77 @@
 class Registry
 {
     public:
+        /**
+         * @brief Create a registry.
+         */
         Registry();
+
+        /**
+         * @brief Destroy the registry.
+         */
         ~Registry();
 
+        /**
+         * @brief Create an entity.
+         *
+         * @param name The name of the entity.
+         * @return The entity.
+         */
         Entity createEntity(const std::string& name);
 
+        /**
+         * @brief Add a component to an entity.
+         *
+         * @param entityId The ID of the entity.
+         * @param component The component to add.
+         */
         template<typename T>
         void addComponent(unsigned int entityId, const T& component);
 
+        /**
+         * @brief Add a component to an entity.
+         *
+         * @param entityId The ID of the entity.
+         * @param args The arguments to create the component.
+         */
         template<typename T, typename... Args>
         void addComponent(unsigned int entityId, Args&&... args);
 
+        /**
+         * @brief Get a component from an entity.
+         *
+         * @param entityId The ID of the entity.
+         * @return The component.
+         */
         template<typename T>
         T* getComponent(unsigned int entityId);
 
+        /**
+         * @brief Check if an entity has a component.
+         *
+         * @param entityId The ID of the entity.
+         * @return True if the entity has the component.
+         */
         template<typename T>
         bool hasComponent(unsigned int entityId);
 
+        /**
+         * @brief Remove a component from an entity.
+         *
+         * @param entityId The ID of the entity.
+         */
         template<typename T>
         void removeComponent(unsigned int entityId);
 
     private:
-        std::unordered_map<std::type_index, std::any> _componentPools;
-        unsigned int _nextEntityId;
+        std::unordered_map<std::type_index, std::any> _componentPools;  /*!< The component pools */
+        unsigned int _nextEntityId;                                      /*!< The next entity ID */
 
+        /**
+         * @brief Get the pool for a component type.
+         *
+         * @return The component pool.
+         */
         template<typename T>
         ComponentPool<T>& getPool();
 };
