@@ -36,6 +36,11 @@
 *.exe
 *.out
 *.app
+dufos
 
 # debug information files
 *.dwo
+
+# Miscellaneous
+.vscode
+build
