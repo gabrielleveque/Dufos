@@ -1,9 +1,3 @@
-/*
-** EPITECH PROJECT, 2025
-** rtype
-** File description:
-** NetworkManager.cpp
-*/
 
 #include "NetworkManager.hpp"
 #include "Utils.hpp"

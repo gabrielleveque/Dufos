@@ -25,9 +25,8 @@ if [ "$OPT" == "network" ]; then
 fi
 
 if [ "$OPT" == "clean" ]; then
-    rm -rf build/${OPT}
+    rm -rf build/
     rm -rf ${PATH_TO_COMMON}/build
-    find . -type f -name '*.dylib' -delete
-    find . -type f -name '*.so' -delete
+    find . -type f -name '*.a' -delete
     exit 0
 fi

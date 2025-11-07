@@ -1,9 +1,3 @@
-/*
-** EPITECH PROJECT, 2025
-** rtype
-** File description:
-** Bytes
-*/
 
 #include "Bytes.hpp"
 

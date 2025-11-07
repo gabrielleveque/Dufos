@@ -1,9 +1,3 @@
-/*
-** EPITECH PROJECT, 2025
-** Dufos
-** File description:
-** Endpoint
-*/
 
 #pragma once
 

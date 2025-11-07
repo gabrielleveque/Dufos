@@ -1,9 +1,3 @@
-/*
-** EPITECH PROJECT, 2025
-** rtype
-** File description:
-** Udp.cpp
-*/
 
 #include "NetworkManager.hpp"
 #include "Protocol/Udp.hpp"
