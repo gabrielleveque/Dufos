@@ -322,7 +322,7 @@ namespace Engine::Network
              */
             static std::string getLastError();
 
-            Fd _fd; /*!> The file descriptor of the socket */
+            Fd _fd;                   /*!> The file descriptor of the socket */
             Data::Endpoint _endpoint; /*!> The endpoint of the socket */
 
             bool _isOwner; /*!> Whether the socket owns the file descriptor (for cleanup purposes) */

@@ -1,7 +1,6 @@
 
 #pragma once
 
-
 #include "Enum/Connection.hpp"
 #include "Protocol/Tcp.hpp"
 #include "Protocol/Udp.hpp"
@@ -108,7 +107,7 @@ namespace Engine::Network
              * @param ref The reference to the object
              * @return Socket& The socket of the client corresponding to the given object
              */
-            template<typename T>
+            template <typename T>
             Socket& getClientSocketBy(T& ref);
 
             /**
@@ -118,7 +117,7 @@ namespace Engine::Network
              * @param ref The reference to the object
              * @return std::uint32_t The id of the client corresponding to the given object
              */
-            template<typename T>
+            template <typename T>
             std::uint32_t getClientIdBy(T& ref);
 
             /**
@@ -141,8 +140,8 @@ namespace Engine::Network
              * @brief Represent the server information
              */
             struct Server {
-                std::unordered_map<std::uint32_t, std::shared_ptr<Socket>> clients; /*!> The map of the clients connected via the tcp socket */
-                std::uint32_t nextClientId;                                       /*!> The next id to give to a client */
+                    std::unordered_map<std::uint32_t, std::shared_ptr<Socket>> clients; /*!> The map of the clients connected via the tcp socket */
+                    std::uint32_t nextClientId;                                         /*!> The next id to give to a client */
             };
 
             /**
@@ -150,9 +149,9 @@ namespace Engine::Network
              * @brief Represent the client information
              */
             struct Client {
-                Data::Endpoint server;   /*!> The endpoint of the server */
-                std::shared_ptr<Socket> socket; /*!> The client connection information */
-                std::uint32_t clientPort;     /*!> The port of the client */
+                    Data::Endpoint server;          /*!> The endpoint of the server */
+                    std::shared_ptr<Socket> socket; /*!> The client connection information */
+                    std::uint32_t clientPort;       /*!> The port of the client */
             };
 
             /**
@@ -167,17 +166,17 @@ namespace Engine::Network
 
             friend class Singleton<NetworkManager>; /*!> Friend class to allow access to the private constructor and destructor */
 
-            bool _running;           /*!> If the NetworkManager is running */
-            std::thread _mainThread; /*!> The main thread of the NetworkManager */
-            Enum::Connection::Side _side;    /*!> The side of the connection (client or server) */
+            bool _running;                /*!> If the NetworkManager is running */
+            std::thread _mainThread;      /*!> The main thread of the NetworkManager */
+            Enum::Connection::Side _side; /*!> The side of the connection (client or server) */
 
             Server _server; /*!> The server information (only for server side) */
             Client _client; /*!> The client information (only for client side) */
 
             std::shared_ptr<Protocol::Tcp> _tcp; /*!> The tcp instance */
-            std::thread _tcpThread;    /*!> The tcp thread */
+            std::thread _tcpThread;              /*!> The tcp thread */
             std::shared_ptr<Protocol::Udp> _udp; /*!> The udp instance */
-            std::thread _udpThread;    /*!> The udp thread */
+            std::thread _udpThread;              /*!> The udp thread */
 
             Callback _callbacks; /*!> The callback handler */
 

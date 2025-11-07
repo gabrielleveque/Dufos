@@ -82,11 +82,11 @@ void Engine::Network::Socket::reuse(bool enable)
 
 #ifdef _WIN32
     if (!enable) {
-        if (::setsockopt(_fd, SOL_SOCKET, SO_EXCLUSIVEADDRUSE, (char *)&opt, sizeof(opt)) == SOCKET_ERROR_CODE) {
+        if (::setsockopt(_fd, SOL_SOCKET, SO_EXCLUSIVEADDRUSE, (char *) &opt, sizeof(opt)) == SOCKET_ERROR_CODE) {
             throw std::runtime_error(std::format("Couldn't set the exclusive address use option on the socket: {}.", getLastError()));
         }
     } else {
-        if (::setsockopt(_fd, SOL_SOCKET, SO_REUSEADDR, (char *)&opt, sizeof(opt)) == SOCKET_ERROR_CODE) {
+        if (::setsockopt(_fd, SOL_SOCKET, SO_REUSEADDR, (char *) &opt, sizeof(opt)) == SOCKET_ERROR_CODE) {
             throw std::runtime_error(std::format("Couldn't set the reuse address option on the socket: {}.", getLastError()));
         }
     }

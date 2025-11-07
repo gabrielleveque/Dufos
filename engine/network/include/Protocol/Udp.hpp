@@ -60,7 +60,7 @@ namespace Engine::Network::Protocol
             std::size_t readDatagram(Socket::Address& addr, Socket::AddressLength& len, Data::Datagram& datagram);
 
             Enum::Connection::Side _side; /*!> The side of the connection (client or server) */
-            bool _running;        /*!> If the tcp instance should run */
+            bool _running;                /*!> If the tcp instance should run */
 
             Socket _socket;                       /*!> The udp socket */
             std::vector<Socket::PollFd> _pollFds; /*!> The pollfd array for the tcp instance */

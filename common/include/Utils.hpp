@@ -12,6 +12,6 @@ namespace Common
              *
              * @param thread The thread to join
              */
-            static void joinThread(std::thread &thread);
+            static void joinThread(std::thread& thread);
     };
 }

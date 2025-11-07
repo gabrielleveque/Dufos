@@ -9,7 +9,6 @@ set(COMMON_LIB_NAME common)
 
 file(GLOB_RECURSE COMMON_SOURCES src/*.cpp)
 
-# add_library(${COMMON_LIB_NAME} STATIC ${COMMON_SOURCES} include/Singleton.hpp)
 add_library(${COMMON_LIB_NAME} STATIC ${COMMON_SOURCES})
 
 target_include_directories(${COMMON_LIB_NAME} PUBLIC

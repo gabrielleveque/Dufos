@@ -50,7 +50,7 @@ namespace Engine::Network::Protocol
 
         private:
             Enum::Connection::Side _side; /*!> The side of the connection (client or server) */
-            bool _running;        /*!> If the tcp instance should run */
+            bool _running;                /*!> If the tcp instance should run */
 
             Socket _socket;                       /*!> The tcp instance socket */
             std::vector<Socket::PollFd> _pollFds; /*!> The pollfd array for the tcp instance */

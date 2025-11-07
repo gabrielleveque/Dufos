@@ -10,12 +10,12 @@ namespace Common
             /**
              * @brief Delete the copy constructor of the Singleton class
              */
-            Singleton(Singleton const &) = delete;
+            Singleton(Singleton const&) = delete;
 
             /**
              * @brief Delete the assignement operator of the Singleton class
              */
-            Singleton& operator=(Singleton const &) = delete;
+            Singleton& operator=(Singleton const&) = delete;
 
             /**
              * @brief Get the Instance object
