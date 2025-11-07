@@ -1,38 +1,35 @@
 #include "Component/Scale.hpp"
 
-namespace Engine::Ecs::Component
+Engine::Ecs::Component::Scale::Scale(float x, float y) : _scaleX(x), _scaleY(y) {}
+
+float Engine::Ecs::Component::Scale::getX() const
 {
-    Scale::Scale(float x, float y) : _scaleX(x), _scaleY(y) {}
+    return _scaleX;
+}
 
-    float Scale::getX() const
-    {
-        return _scaleX;
-    }
+float Engine::Ecs::Component::Scale::getY() const
+{
+    return _scaleY;
+}
 
-    float Scale::getY() const
-    {
-        return _scaleY;
-    }
+void Engine::Ecs::Component::Scale::setX(float x)
+{
+    _scaleX = x;
+}
 
-    void Scale::setX(float x)
-    {
-        _scaleX = x;
-    }
+void Engine::Ecs::Component::Scale::setY(float y)
+{
+    _scaleY = y;
+}
 
-    void Scale::setY(float y)
-    {
-        _scaleY = y;
-    }
+void Engine::Ecs::Component::Scale::setScale(float x, float y)
+{
+    _scaleX = x;
+    _scaleY = y;
+}
 
-    void Scale::setScale(float x, float y)
-    {
-        _scaleX = x;
-        _scaleY = y;
-    }
-
-    void Scale::setUniform(float s)
-    {
-        _scaleX = s;
-        _scaleY = s;
-    }
+void Engine::Ecs::Component::Scale::setUniform(float s)
+{
+    _scaleX = s;
+    _scaleY = s;
 }

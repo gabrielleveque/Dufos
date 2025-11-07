@@ -1,22 +1,19 @@
 #include "Entity/Entity.hpp"
 
-namespace Engine::Ecs
+Engine::Ecs::Entity::Entity(const std::string& entityName, std::shared_ptr<Registry> reg, std::size_t entityId)
+    : _registry(reg), _id(entityId), _name(entityName) {}
+
+std::size_t Engine::Ecs::Entity::getId() const
 {
-    Entity::Entity(const std::string& entityName, std::shared_ptr<Registry> reg, std::size_t entityId)
-        : _registry(reg), _id(entityId), _name(entityName) {}
+    return _id;
+}
 
-    std::size_t Entity::getId() const
-    {
-        return _id;
-    }
+const std::string& Engine::Ecs::Entity::getName() const
+{
+    return _name;
+}
 
-    const std::string& Entity::getName() const
-    {
-        return _name;
-    }
-
-    void Entity::setName(const std::string& newName)
-    {
-        _name = newName;
-    }
+void Engine::Ecs::Entity::setName(const std::string& newName)
+{
+    _name = newName;
 }

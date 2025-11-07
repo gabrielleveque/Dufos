@@ -1,32 +1,29 @@
 #include "Component/Position.hpp"
 
-namespace Engine::Ecs::Component
+Engine::Ecs::Component::Position::Position(std::uint16_t posX, std::uint16_t posY) : _x(posX), _y(posY) {}
+
+std::uint16_t Engine::Ecs::Component::Position::getX() const
 {
-    Position::Position(std::uint16_t posX, std::uint16_t posY) : _x(posX), _y(posY) {}
+    return _x;
+}
 
-    std::uint16_t Position::getX() const
-    {
-        return _x;
-    }
+std::uint16_t Engine::Ecs::Component::Position::getY() const
+{
+    return _y;
+}
 
-    std::uint16_t Position::getY() const
-    {
-        return _y;
-    }
+void Engine::Ecs::Component::Position::setX(std::uint16_t posX)
+{
+    _x = posX;
+}
 
-    void Position::setX(std::uint16_t posX)
-    {
-        _x = posX;
-    }
+void Engine::Ecs::Component::Position::setY(std::uint16_t posY)
+{
+    _y = posY;
+}
 
-    void Position::setY(std::uint16_t posY)
-    {
-        _y = posY;
-    }
-
-    void Position::setPosition(std::uint16_t posX, std::uint16_t posY)
-    {
-        _x = posX;
-        _y = posY;
-    }
+void Engine::Ecs::Component::Position::setPosition(std::uint16_t posX, std::uint16_t posY)
+{
+    _x = posX;
+    _y = posY;
 }
