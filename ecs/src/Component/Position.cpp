@@ -1,31 +1,32 @@
 #include "Component/Position.hpp"
 
-Position::Position(float posX, float posY) : _x(posX), _y(posY)
+namespace Engine::Ecs::Component
 {
-}
+    Position::Position(std::uint16_t posX, std::uint16_t posY) : _x(posX), _y(posY) {}
 
-float Position::getX() const
-{
-    return _x;
-}
+    std::uint16_t Position::getX() const
+    {
+        return _x;
+    }
 
-float Position::getY() const
-{
-    return _y;
-}
+    std::uint16_t Position::getY() const
+    {
+        return _y;
+    }
 
-void Position::setX(float posX)
-{
-    _x = posX;
-}
+    void Position::setX(std::uint16_t posX)
+    {
+        _x = posX;
+    }
 
-void Position::setY(float posY)
-{
-    _y = posY;
-}
+    void Position::setY(std::uint16_t posY)
+    {
+        _y = posY;
+    }
 
-void Position::setPosition(float posX, float posY)
-{
-    _x = posX;
-    _y = posY;
+    void Position::setPosition(std::uint16_t posX, std::uint16_t posY)
+    {
+        _x = posX;
+        _y = posY;
+    }
 }

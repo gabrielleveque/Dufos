@@ -9,40 +9,43 @@
 #include "Component/Scale.hpp"
 #include "Component/ZIndex.hpp"
 
+using namespace Engine::Ecs;
+using namespace Engine::Ecs::Component;
+
 int main()
 {
     InitWindow(800, 600, "ECS Test - Sprite Rendering");
     SetTargetFPS(60);
 
-    Registry registry;
+    auto registry = std::make_shared<Registry>();
 
-    Entity grass1 = registry.createEntity("Grass1");
-    Entity grass2 = registry.createEntity("Grass2");
-    Entity stone = registry.createEntity("Stone");
-    Entity lineMap = registry.createEntity("LineMap");
-    Entity water = registry.createEntity("Water");
+    Entity grass1 = registry->createEntity("Grass1");
+    Entity grass2 = registry->createEntity("Grass2");
+    Entity stone = registry->createEntity("Stone");
+    Entity lineMap = registry->createEntity("LineMap");
+    Entity water = registry->createEntity("Water");
 
-    grass1.add<Position>(100.0f, 100.0f);
+    grass1.add<Position>(100, 100);
     grass1.add<Sprite>("assets/Grass1.png");
     grass1.add<Scale>(1.0f, 1.0f);
     grass1.add<ZIndex>(0);
 
-    grass2.add<Position>(250.0f, 100.0f);
+    grass2.add<Position>(250, 100);
     grass2.add<Sprite>("assets/Grass2.png");
     grass2.add<Scale>(1.5f, 1.5f);
     grass2.add<ZIndex>(2);
 
-    stone.add<Position>(400.0f, 100.0f);
+    stone.add<Position>(400, 100);
     stone.add<Sprite>("assets/Stone.png");
     stone.add<Scale>(2.0f, 2.0f);
     stone.add<ZIndex>(3);
 
-    lineMap.add<Position>(100.0f, 300.0f);
+    lineMap.add<Position>(100, 300);
     lineMap.add<Sprite>("assets/LineMap.png");
     lineMap.add<Scale>(1.0f, 1.0f);
     lineMap.add<ZIndex>(1);
 
-    water.add<Position>(550.0f, 100.0f);
+    water.add<Position>(550, 100);
     water.add<Sprite>("assets/Water.png", 48, 36, 5, 0.18f, 5);
     water.add<Scale>(2.0f, 2.0f);
     water.add<ZIndex>(0);
@@ -53,39 +56,34 @@ int main()
     {
         float dt = GetFrameTime();
 
-        for (auto& entity : entities)
-        {
-            Sprite* sprite = entity.get<Sprite>();
-            if (sprite)
-            {
-                sprite->updateAnimation(dt);
+        for (auto& entity : entities) {
+            auto spriteOpt = entity.get<Sprite>();
+            if (spriteOpt) {
+                spriteOpt->get().updateAnimation(dt);
             }
         }
 
-        std::sort(entities.begin(), entities.end(), [](Entity& a, Entity& b)
-        {
-            ZIndex* zIndexA = a.get<ZIndex>();
-            ZIndex* zIndexB = b.get<ZIndex>();
+        std::sort(entities.begin(), entities.end(), [](Entity& a, Entity& b) {
+            auto zIndexAOpt = a.get<ZIndex>();
+            auto zIndexBOpt = b.get<ZIndex>();
 
-            if (!zIndexA && !zIndexB) return false;
-            if (!zIndexA) return true;
-            if (!zIndexB) return false;
+            if (!zIndexAOpt && !zIndexBOpt) return false;
+            if (!zIndexAOpt) return true;
+            if (!zIndexBOpt) return false;
 
-            return zIndexA->getIndex() < zIndexB->getIndex();
+            return zIndexAOpt->get().getIndex() < zIndexBOpt->get().getIndex();
         });
 
         BeginDrawing();
         ClearBackground(DARKGRAY);
 
-        for (auto& entity : entities)
-        {
-            Position* pos = entity.get<Position>();
-            Sprite* sprite = entity.get<Sprite>();
-            Scale* scale = entity.get<Scale>();
+        for (auto& entity : entities) {
+            auto posOpt = entity.get<Position>();
+            auto spriteOpt = entity.get<Sprite>();
+            auto scaleOpt = entity.get<Scale>();
 
-            if (pos && sprite && scale)
-            {
-                sprite->drawSprite(*pos, *scale);
+            if (posOpt && spriteOpt && scaleOpt) {
+                spriteOpt->get().drawSprite(posOpt->get(), scaleOpt->get());
             }
         }
 

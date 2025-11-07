@@ -1,15 +1,16 @@
 #include "Component/ZIndex.hpp"
 
-ZIndex::ZIndex(int index) : _zIndex(index)
+namespace Engine::Ecs::Component
 {
-}
+    ZIndex::ZIndex(std::size_t index) : _zIndex(index) {}
 
-int ZIndex::getIndex() const
-{
-    return _zIndex;
-}
+    std::size_t ZIndex::getIndex() const
+    {
+        return _zIndex;
+    }
 
-void ZIndex::setIndex(int index)
-{
-    _zIndex = index;
+    void ZIndex::setIndex(std::size_t index)
+    {
+        _zIndex = index;
+    }
 }

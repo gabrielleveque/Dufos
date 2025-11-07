@@ -1,15 +1,14 @@
 #include "Registry/Registry.hpp"
 
-Registry::Registry() : _nextEntityId(0)
+namespace Engine::Ecs
 {
-}
+    Registry::Registry() : _nextEntityId(0) {}
 
-Registry::~Registry()
-{
-}
+    Registry::~Registry() {}
 
-Entity Registry::createEntity(const std::string& name)
-{
-    Entity entity(name, this, _nextEntityId++);
-    return entity;
+    Entity Registry::createEntity(const std::string& name)
+    {
+        Entity entity(name, shared_from_this(), _nextEntityId++);
+        return entity;
+    }
 }
