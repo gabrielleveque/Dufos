@@ -9,7 +9,7 @@
 #include <cstdint>
 #include <thread>
 
-namespace Engine::Network::Protocol
+namespace Network::Protocol
 {
     class Udp
     {

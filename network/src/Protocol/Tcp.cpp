@@ -6,7 +6,7 @@
 #include <iostream>
 #include <thread>
 
-Engine::Network::Protocol::Tcp::Tcp(Data::Endpoint endpoint, Enum::Connection::Side side) : _side(side), _running(true), _socket(Enum::Connection::Type::TCP, endpoint)
+Network::Protocol::Tcp::Tcp(Data::Endpoint endpoint, Enum::Connection::Side side) : _side(side), _running(true), _socket(Enum::Connection::Type::TCP, endpoint)
 {
     Socket::Address_in addr = {0};
 
@@ -23,12 +23,12 @@ Engine::Network::Protocol::Tcp::Tcp(Data::Endpoint endpoint, Enum::Connection::S
     _pollFds.push_back({.fd = _socket.getFd(), .events = POLLIN, .revents = 0});
 }
 
-void Engine::Network::Protocol::Tcp::stop()
+void Network::Protocol::Tcp::stop()
 {
     _running = false;
 }
 
-void Engine::Network::Protocol::Tcp::run()
+void Network::Protocol::Tcp::run()
 {
     try {
         NetworkManager& manager = NetworkManager::getInstance();
@@ -66,7 +66,7 @@ void Engine::Network::Protocol::Tcp::run()
     }
 }
 
-void Engine::Network::Protocol::Tcp::connectToServer(const std::string& host, std::uint16_t port)
+void Network::Protocol::Tcp::connectToServer(const std::string& host, std::uint16_t port)
 {
     if (_side != Enum::Connection::Side::CLIENT) {
         return;
@@ -85,7 +85,7 @@ void Engine::Network::Protocol::Tcp::connectToServer(const std::string& host, st
     }
 }
 
-void Engine::Network::Protocol::Tcp::acceptSocket()
+void Network::Protocol::Tcp::acceptSocket()
 {
     if (_side != Enum::Connection::Side::SERVER) {
         return;
@@ -104,7 +104,7 @@ void Engine::Network::Protocol::Tcp::acceptSocket()
     }
 }
 
-void Engine::Network::Protocol::Tcp::disconnectSocket(std::size_t id)
+void Network::Protocol::Tcp::disconnectSocket(std::size_t id)
 {
     if (_side != Enum::Connection::Side::SERVER) {
         return;
@@ -120,7 +120,7 @@ void Engine::Network::Protocol::Tcp::disconnectSocket(std::size_t id)
     }
 }
 
-std::size_t Engine::Network::Protocol::Tcp::readHeader(Socket& socket, Data::Segment& segment)
+std::size_t Network::Protocol::Tcp::readHeader(Socket& socket, Data::Segment& segment)
 {
     std::vector<std::uint8_t> buffer(5);
     std::size_t bytesRead = socket.recv(buffer, 5, 0);
@@ -133,7 +133,7 @@ std::size_t Engine::Network::Protocol::Tcp::readHeader(Socket& socket, Data::Seg
     return bytesRead;
 }
 
-std::size_t Engine::Network::Protocol::Tcp::readBody(Socket& socket, Data::Segment& segment)
+std::size_t Network::Protocol::Tcp::readBody(Socket& socket, Data::Segment& segment)
 {
     if (segment.length == 0) {
         return 0;
@@ -147,7 +147,7 @@ std::size_t Engine::Network::Protocol::Tcp::readBody(Socket& socket, Data::Segme
     return bytesRead;
 }
 
-bool Engine::Network::Protocol::Tcp::readFromSocket(Socket& socket)
+bool Network::Protocol::Tcp::readFromSocket(Socket& socket)
 {
     if (!_running) {
         return false;
@@ -169,7 +169,7 @@ bool Engine::Network::Protocol::Tcp::readFromSocket(Socket& socket)
     return true;
 }
 
-void Engine::Network::Protocol::Tcp::sendToSocket(Socket& socket, std::vector<std::uint8_t>& msg)
+void Network::Protocol::Tcp::sendToSocket(Socket& socket, std::vector<std::uint8_t>& msg)
 {
     try {
         socket.send(msg, msg.size(), 0);

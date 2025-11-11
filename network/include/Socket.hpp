@@ -21,7 +21,7 @@
 #include <vector>
 #include <any>
 
-namespace Engine::Network
+namespace Network
 {
 #ifdef _WIN32
     /**
@@ -259,7 +259,7 @@ namespace Engine::Network
              * @param flags Flags for sending the data
              * @param destAddr The destination address
              * @param destLen The length of the destination address
-             * @return Engine::Network::Socket::BytesReceived The number of bytes sent, or -1 on error
+             * @return Network::Socket::BytesReceived The number of bytes sent, or -1 on error
              */
             BytesReceived sendTo(const Buffer& buffer, BufferLength length, std::int32_t flags, const Address& destAddr, AddressLength destAddrLen);
 
@@ -271,7 +271,7 @@ namespace Engine::Network
              * @param flags Flags for receiving the data
              * @param srcAddr (Optional) Pointer to an Address structure to store the source address
              * @param srcAddrLen (Optional) Pointer to an AddressLength variable to store the length of the source address
-             * @return Engine::Network::Socket::BytesReceived The number of bytes received, or -1 on error
+             * @return Network::Socket::BytesReceived The number of bytes received, or -1 on error
              */
             BytesReceived recvFrom(
                 Buffer& buffer, BufferLength length, std::int32_t flags, OptionalReference<Address> srcAddr = std::nullopt, OptionalReference<AddressLength> srcAddrLen = std::nullopt);
@@ -288,7 +288,7 @@ namespace Engine::Network
             /**
              * @brief Get the Fd object
              *
-             * @return Engine::Network::Socket::Fd
+             * @return Network::Socket::Fd
              */
             Fd getFd() const;
 

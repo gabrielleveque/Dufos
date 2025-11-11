@@ -4,12 +4,12 @@
 
 #include <type_traits>
 
-Engine::Network::NetworkManager::NetworkManager() : _running(true)
+Network::NetworkManager::NetworkManager() : _running(true)
 {
     Socket::startup();
 }
 
-Engine::Network::NetworkManager::~NetworkManager()
+Network::NetworkManager::~NetworkManager()
 {
     _running = false;
     if (_tcp) {
@@ -24,7 +24,7 @@ Engine::Network::NetworkManager::~NetworkManager()
     Socket::cleanup();
 }
 
-void Engine::Network::NetworkManager::initialize(Enum::Connection::Side side)
+void Network::NetworkManager::initialize(Enum::Connection::Side side)
 {
     if (side == Enum::Connection::Side::CLIENT) {
         _client.clientPort = getAvailablePort();
@@ -33,12 +33,12 @@ void Engine::Network::NetworkManager::initialize(Enum::Connection::Side side)
     _mainThread = std::thread(&NetworkManager::run, this);
 }
 
-void Engine::Network::NetworkManager::stop()
+void Network::NetworkManager::stop()
 {
     _running = false;
 }
 
-void Engine::Network::NetworkManager::run()
+void Network::NetworkManager::run()
 {
     while (_running) {
         while (!_disconnectionQueue.empty()) {
@@ -56,7 +56,7 @@ void Engine::Network::NetworkManager::run()
     }
 }
 
-void Engine::Network::NetworkManager::createConnection(Enum::Connection::Type type, Data::Endpoint endpoint)
+void Network::NetworkManager::createConnection(Enum::Connection::Type type, Data::Endpoint endpoint)
 {
     if (_side == Enum::Connection::Side::CLIENT) {
         endpoint.port = _client.clientPort;
@@ -77,7 +77,7 @@ void Engine::Network::NetworkManager::createConnection(Enum::Connection::Type ty
     }
 }
 
-void Engine::Network::NetworkManager::connectToServer()
+void Network::NetworkManager::connectToServer()
 {
     if (_side == Enum::Connection::Side::CLIENT && _tcp) {
         _tcp->connectToServer(_client.server.address, _client.server.port);
@@ -85,7 +85,7 @@ void Engine::Network::NetworkManager::connectToServer()
     }
 }
 
-void Engine::Network::NetworkManager::sendMessage(Enum::Connection::Type type, std::vector<std::uint8_t> msg)
+void Network::NetworkManager::sendMessage(Enum::Connection::Type type, std::vector<std::uint8_t> msg)
 {
     if (_side != Enum::Connection::Side::CLIENT) {
         return;
@@ -102,7 +102,7 @@ void Engine::Network::NetworkManager::sendMessage(Enum::Connection::Type type, s
     }
 }
 
-void Engine::Network::NetworkManager::sendMessageTo(Enum::Connection::Type type, std::vector<std::uint32_t> ids, std::vector<std::uint8_t> msg)
+void Network::NetworkManager::sendMessageTo(Enum::Connection::Type type, std::vector<std::uint32_t> ids, std::vector<std::uint8_t> msg)
 {
     if (_side != Enum::Connection::Side::SERVER || ids.empty()) {
         return;
@@ -127,7 +127,7 @@ void Engine::Network::NetworkManager::sendMessageTo(Enum::Connection::Type type,
     }
 }
 
-void Engine::Network::NetworkManager::callbackHandler(Callback::Type callback, Socket& socket)
+void Network::NetworkManager::callbackHandler(Callback::Type callback, Socket& socket)
 {
     if (callback == Callback::Type::ON_CONNECTION) {
         std::shared_ptr<Socket> connectionSocket = std::make_shared<Socket>(socket);
@@ -143,14 +143,14 @@ void Engine::Network::NetworkManager::callbackHandler(Callback::Type callback, S
     }
 }
 
-void Engine::Network::NetworkManager::callbackHandler(Callback::Type callback, std::uint32_t id)
+void Network::NetworkManager::callbackHandler(Callback::Type callback, std::uint32_t id)
 {
     if (callback == Callback::Type::ON_DISCONNECTION) {
         _disconnectionQueue.push(id);
     }
 }
 
-void Engine::Network::NetworkManager::callbackHandler(Callback::Type callback, Enum::Connection::Type type, std::uint32_t id, Data::Message& message)
+void Network::NetworkManager::callbackHandler(Callback::Type callback, Enum::Connection::Type type, std::uint32_t id, Data::Message& message)
 {
     if (callback == Callback::Type::ON_MESSAGE_RECEPTION) {
         if (_side != Enum::Connection::Side::CLIENT && _server.clients.find(id) == _server.clients.end()) {
@@ -161,7 +161,7 @@ void Engine::Network::NetworkManager::callbackHandler(Callback::Type callback, E
 }
 
 template <typename T>
-Engine::Network::Socket& Engine::Network::NetworkManager::getClientSocketBy(T& ref)
+Network::Socket& Network::NetworkManager::getClientSocketBy(T& ref)
 {
     if (_side == Enum::Connection::Side::CLIENT) {
         throw std::runtime_error("Client side has no clients");
@@ -176,10 +176,10 @@ Engine::Network::Socket& Engine::Network::NetworkManager::getClientSocketBy(T& r
     throw std::runtime_error("Client not found");
 }
 
-template Engine::Network::Socket& Engine::Network::NetworkManager::getClientSocketBy<Engine::Network::Socket::Fd>(Engine::Network::Socket::Fd& ref);
+template Network::Socket& Network::NetworkManager::getClientSocketBy<Network::Socket::Fd>(Network::Socket::Fd& ref);
 
 template <typename T>
-std::uint32_t Engine::Network::NetworkManager::getClientIdBy(T& ref)
+std::uint32_t Network::NetworkManager::getClientIdBy(T& ref)
 {
     if (_side == Enum::Connection::Side::CLIENT) {
         return 0;
@@ -200,15 +200,15 @@ std::uint32_t Engine::Network::NetworkManager::getClientIdBy(T& ref)
     throw std::runtime_error("Client not found");
 }
 
-template std::uint32_t Engine::Network::NetworkManager::getClientIdBy<Engine::Network::Socket>(Engine::Network::Socket& ref);
-template std::uint32_t Engine::Network::NetworkManager::getClientIdBy<Engine::Network::Data::Endpoint>(Engine::Network::Data::Endpoint& ref);
+template std::uint32_t Network::NetworkManager::getClientIdBy<Network::Socket>(Network::Socket& ref);
+template std::uint32_t Network::NetworkManager::getClientIdBy<Network::Data::Endpoint>(Network::Data::Endpoint& ref);
 
-void Engine::Network::NetworkManager::setServerEndpoint(Data::Endpoint endpoint)
+void Network::NetworkManager::setServerEndpoint(Data::Endpoint endpoint)
 {
     _client.server = endpoint;
 }
 
-std::uint16_t Engine::Network::NetworkManager::getAvailablePort()
+std::uint16_t Network::NetworkManager::getAvailablePort()
 {
     Socket socket(Enum::Connection::Type::TCP, {LOCALHOST, 0});
     Data::Endpoint endpoint = socket.getEndpoint();
@@ -224,7 +224,7 @@ std::uint16_t Engine::Network::NetworkManager::getAvailablePort()
     return ntohs(addr.sin_port);
 }
 
-Engine::Network::Callback& Engine::Network::NetworkManager::callbacks()
+Network::Callback& Network::NetworkManager::callbacks()
 {
     return _callbacks;
 }

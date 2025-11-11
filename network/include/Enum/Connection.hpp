@@ -1,7 +1,7 @@
 
 #pragma once
 
-namespace Engine::Network::Enum::Connection
+namespace Network::Enum::Connection
 {
     /**
      * @enum Connection types

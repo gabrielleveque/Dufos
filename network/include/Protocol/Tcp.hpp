@@ -8,7 +8,7 @@
 
 #include <cstdint>
 
-namespace Engine::Network::Protocol
+namespace Network::Protocol
 {
     class Tcp
     {

@@ -6,7 +6,7 @@
 
 #include <functional>
 
-namespace Engine::Network
+namespace Network
 {
     class Callback
     {

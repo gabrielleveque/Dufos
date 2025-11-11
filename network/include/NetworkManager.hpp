@@ -17,7 +17,7 @@
 
 #define LOCALHOST "127.0.0.1"
 
-namespace Engine::Network
+namespace Network
 {
     class NetworkManager : public Common::Singleton<NetworkManager>
     {

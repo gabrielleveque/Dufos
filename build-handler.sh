@@ -1,7 +1,7 @@
 #!/bin/bash
 
 PATH_TO_COMMON="common"
-PATH_TO_NETWORK="engine/network"
+PATH_TO_NETWORK="network"
 
 OPT="$1"
 

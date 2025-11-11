@@ -1,7 +1,7 @@
 
 #include "Bytes.hpp"
 
-std::vector<std::uint8_t> Engine::Network::Bytes::numberToBytes(const std::uint64_t number, std::uint8_t bytesToWrite)
+std::vector<std::uint8_t> Network::Bytes::numberToBytes(const std::uint64_t number, std::uint8_t bytesToWrite)
 {
     std::uint8_t shift = (bytesToWrite - 1) * 8;
     std::vector<std::uint8_t> buffer;
@@ -14,7 +14,7 @@ std::vector<std::uint8_t> Engine::Network::Bytes::numberToBytes(const std::uint6
     return buffer;
 }
 
-std::uint64_t Engine::Network::Bytes::bytesToNumber(const std::vector<std::uint8_t> bytes, std::uint8_t bytesToRead)
+std::uint64_t Network::Bytes::bytesToNumber(const std::vector<std::uint8_t> bytes, std::uint8_t bytesToRead)
 {
     std::uint8_t shift = (bytesToRead - 1) * 8;
     std::uint64_t number = 0;

@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <string>
 
-namespace Engine::Network::Data
+namespace Network::Data
 {
     /**
      * @struct Endpoint

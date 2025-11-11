@@ -5,7 +5,7 @@
 
 #include <iostream>
 
-Engine::Network::Protocol::Udp::Udp(Data::Endpoint endpoint, Enum::Connection::Side side) : _side(side), _running(true), _socket(Enum::Connection::Type::UDP, endpoint)
+Network::Protocol::Udp::Udp(Data::Endpoint endpoint, Enum::Connection::Side side) : _side(side), _running(true), _socket(Enum::Connection::Type::UDP, endpoint)
 {
     Socket::Address_in addr = {0};
 
@@ -19,12 +19,12 @@ Engine::Network::Protocol::Udp::Udp(Data::Endpoint endpoint, Enum::Connection::S
     _pollFds.push_back({.fd = _socket.getFd(), .events = POLLIN, .revents = 0});
 }
 
-void Engine::Network::Protocol::Udp::stop()
+void Network::Protocol::Udp::stop()
 {
     _running = false;
 }
 
-void Engine::Network::Protocol::Udp::run()
+void Network::Protocol::Udp::run()
 {
     try {
         while (_running) {
@@ -41,7 +41,7 @@ void Engine::Network::Protocol::Udp::run()
     }
 }
 
-std::size_t Engine::Network::Protocol::Udp::readDatagram(Socket::Address& addr, Socket::AddressLength& len, Data::Datagram& datagram)
+std::size_t Network::Protocol::Udp::readDatagram(Socket::Address& addr, Socket::AddressLength& len, Data::Datagram& datagram)
 {
     std::vector<std::uint8_t> buffer(1024);
     std::size_t bytesRead = _socket.recvFrom(buffer, buffer.size(), 0, addr, len);
@@ -55,7 +55,7 @@ std::size_t Engine::Network::Protocol::Udp::readDatagram(Socket::Address& addr, 
     return bytesRead;
 }
 
-void Engine::Network::Protocol::Udp::readFromSocket()
+void Network::Protocol::Udp::readFromSocket()
 {
     try {
         NetworkManager& manager = NetworkManager::getInstance();
@@ -75,7 +75,7 @@ void Engine::Network::Protocol::Udp::readFromSocket()
     }
 }
 
-void Engine::Network::Protocol::Udp::sendToEndpoint(Data::Endpoint endpoint, std::vector<std::uint8_t>& msg)
+void Network::Protocol::Udp::sendToEndpoint(Data::Endpoint endpoint, std::vector<std::uint8_t>& msg)
 {
     try {
         Socket::Address_in servAddr = {0};

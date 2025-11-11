@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <vector>
 
-namespace Engine::Network
+namespace Network
 {
     class Bytes
     {

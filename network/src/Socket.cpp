@@ -10,7 +10,7 @@
 #include <cstring>
 #include <format>
 
-Engine::Network::Socket::Socket(Enum::Connection::Type type, Data::Endpoint endpoint) : _endpoint(endpoint), _isOwner(true)
+Network::Socket::Socket(Enum::Connection::Type type, Data::Endpoint endpoint) : _endpoint(endpoint), _isOwner(true)
 {
     if (type == Enum::Connection::Type::TCP) {
         _fd = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
@@ -22,7 +22,7 @@ Engine::Network::Socket::Socket(Enum::Connection::Type type, Data::Endpoint endp
     }
 }
 
-Engine::Network::Socket::Socket(Fd fd, bool isOwner) : _fd(fd), _isOwner(isOwner)
+Network::Socket::Socket(Fd fd, bool isOwner) : _fd(fd), _isOwner(isOwner)
 {
     if (fd == INVALID_FD) {
         throw std::runtime_error(std::format("Invalid file descriptor provided."));
@@ -30,7 +30,7 @@ Engine::Network::Socket::Socket(Fd fd, bool isOwner) : _fd(fd), _isOwner(isOwner
     startup();
 }
 
-Engine::Network::Socket::~Socket()
+Network::Socket::~Socket()
 {
     if (!_isOwner) {
         return;
@@ -44,7 +44,7 @@ Engine::Network::Socket::~Socket()
     }
 }
 
-void Engine::Network::Socket::startup()
+void Network::Socket::startup()
 {
 #ifdef _WIN32
     WSADATA wsaData = {0};
@@ -55,28 +55,28 @@ void Engine::Network::Socket::startup()
 #endif
 }
 
-void Engine::Network::Socket::cleanup()
+void Network::Socket::cleanup()
 {
 #ifdef _WIN32
     ::WSACleanup();
 #endif
 }
 
-void Engine::Network::Socket::bind(const Address& addr, AddressLength addrLen)
+void Network::Socket::bind(const Address& addr, AddressLength addrLen)
 {
     if (::bind(_fd, &addr, addrLen) == SOCKET_ERROR_CODE) {
         throw std::runtime_error(std::format("Couldn't bind the socket: {}.", getLastError()));
     }
 }
 
-void Engine::Network::Socket::listen(std::int32_t backlog)
+void Network::Socket::listen(std::int32_t backlog)
 {
     if (::listen(_fd, backlog) == SOCKET_ERROR_CODE) {
         throw std::runtime_error(std::format("Couldn't listen on the socket: {}.", getLastError()));
     }
 }
 
-void Engine::Network::Socket::reuse(bool enable)
+void Network::Socket::reuse(bool enable)
 {
     std::uint32_t opt = 1;
 
@@ -100,7 +100,7 @@ void Engine::Network::Socket::reuse(bool enable)
 #endif
 }
 
-Engine::Network::Socket Engine::Network::Socket::accept(OptionalReference<Address> addr, OptionalReference<AddressLength> addrLen)
+Network::Socket Network::Socket::accept(OptionalReference<Address> addr, OptionalReference<AddressLength> addrLen)
 {
     Address *addrPtr = addr.has_value() ? &addr.value().get() : nullptr;
     AddressLength *addrLenPtr = addrLen.has_value() ? &addrLen.value().get() : nullptr;
@@ -113,14 +113,14 @@ Engine::Network::Socket Engine::Network::Socket::accept(OptionalReference<Addres
     return clientFd;
 }
 
-void Engine::Network::Socket::connect(const Address& addr, AddressLength addrLen)
+void Network::Socket::connect(const Address& addr, AddressLength addrLen)
 {
     if (::connect(_fd, &addr, addrLen) == SOCKET_ERROR_CODE) {
         throw std::runtime_error(std::format("Couldn't connect to the address: {}.", getLastError()));
     }
 }
 
-std::int32_t Engine::Network::Socket::poll(std::vector<PollFd>& fds, NFDS nfds, std::int32_t timeout)
+std::int32_t Network::Socket::poll(std::vector<PollFd>& fds, NFDS nfds, std::int32_t timeout)
 {
     std::int32_t polled = 0;
 
@@ -135,7 +135,7 @@ std::int32_t Engine::Network::Socket::poll(std::vector<PollFd>& fds, NFDS nfds, 
     return polled;
 }
 
-Engine::Network::Socket::BytesSent Engine::Network::Socket::send(const Buffer& buffer, BufferLength length, std::int32_t flags)
+Network::Socket::BytesSent Network::Socket::send(const Buffer& buffer, BufferLength length, std::int32_t flags)
 {
     BytesSent bytesSent = 0;
 
@@ -146,7 +146,7 @@ Engine::Network::Socket::BytesSent Engine::Network::Socket::send(const Buffer& b
     return bytesSent;
 }
 
-Engine::Network::Socket::BytesReceived Engine::Network::Socket::recv(Buffer& buffer, BufferLength length, std::int32_t flags)
+Network::Socket::BytesReceived Network::Socket::recv(Buffer& buffer, BufferLength length, std::int32_t flags)
 {
     BytesReceived bytesReceived = 0;
 
@@ -157,7 +157,7 @@ Engine::Network::Socket::BytesReceived Engine::Network::Socket::recv(Buffer& buf
     return bytesReceived;
 }
 
-Engine::Network::Socket::BytesReceived Engine::Network::Socket::sendTo(const Buffer& buffer, BufferLength length, std::int32_t flags, const Address& destAddr, AddressLength destAddrLen)
+Network::Socket::BytesReceived Network::Socket::sendTo(const Buffer& buffer, BufferLength length, std::int32_t flags, const Address& destAddr, AddressLength destAddrLen)
 {
     BytesSent bytesSent = 0;
 
@@ -168,8 +168,7 @@ Engine::Network::Socket::BytesReceived Engine::Network::Socket::sendTo(const Buf
     return bytesSent;
 }
 
-Engine::Network::Socket::BytesReceived Engine::Network::Socket::recvFrom(
-    Buffer& buffer, BufferLength length, std::int32_t flags, OptionalReference<Address> srcAddr, OptionalReference<AddressLength> srcAddrLen)
+Network::Socket::BytesReceived Network::Socket::recvFrom(Buffer& buffer, BufferLength length, std::int32_t flags, OptionalReference<Address> srcAddr, OptionalReference<AddressLength> srcAddrLen)
 {
     Address *addrPtr = srcAddr.has_value() ? &srcAddr->get() : nullptr;
     AddressLength *addrLenPtr = srcAddrLen.has_value() ? &srcAddrLen->get() : nullptr;
@@ -183,7 +182,7 @@ Engine::Network::Socket::BytesReceived Engine::Network::Socket::recvFrom(
     return bytesReceived;
 }
 
-std::int32_t Engine::Network::Socket::getSockName(Address& addr, AddressLength& addrLen)
+std::int32_t Network::Socket::getSockName(Address& addr, AddressLength& addrLen)
 {
     if (::getsockname(_fd, &addr, &addrLen) < SOCKET_ERROR_CODE) {
         throw std::runtime_error(std::format("Error getting socket name: {}.", getLastError()));
@@ -191,22 +190,22 @@ std::int32_t Engine::Network::Socket::getSockName(Address& addr, AddressLength& 
     return 0;
 }
 
-Engine::Network::Socket::Fd Engine::Network::Socket::getFd() const
+Network::Socket::Fd Network::Socket::getFd() const
 {
     return _fd;
 }
 
-Engine::Network::Data::Endpoint Engine::Network::Socket::getEndpoint() const
+Network::Data::Endpoint Network::Socket::getEndpoint() const
 {
     return _endpoint;
 }
 
-void Engine::Network::Socket::setEndpoint(Data::Endpoint endpoint)
+void Network::Socket::setEndpoint(Data::Endpoint endpoint)
 {
     _endpoint = endpoint;
 }
 
-std::string Engine::Network::Socket::getLastError()
+std::string Network::Socket::getLastError()
 {
     std::string error;
 
@@ -218,7 +217,7 @@ std::string Engine::Network::Socket::getLastError()
     return error;
 }
 
-Engine::Network::Socket::InAddr Engine::Network::Socket::inetAddr(std::string ip)
+Network::Socket::InAddr Network::Socket::inetAddr(std::string ip)
 {
     return ::inet_addr(ip.c_str());
 }
