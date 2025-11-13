@@ -7,16 +7,17 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
 set(COMMON_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../common)
 
-set(NETWORK_LIB_NAME network)
+add_subdirectory(${COMMON_DIRECTORY} common)
+
+set(NETWORK_LIB network)
 
 file(GLOB_RECURSE NETWORK_SOURCES src/*.cpp)
 
+add_library(${NETWORK_LIB} STATIC ${NETWORK_SOURCES})
 
-add_library(${NETWORK_LIB_NAME} STATIC ${NETWORK_SOURCES})
-
-target_include_directories(${NETWORK_LIB_NAME} PUBLIC
+target_include_directories(${NETWORK_LIB} PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<BUILD_INTERFACE:${COMMON_DIRECTORY}/include>
 )
 
-target_link_libraries(${NETWORK_LIB_NAME} PUBLIC common)
+target_link_libraries(${NETWORK_LIB} PUBLIC common)
