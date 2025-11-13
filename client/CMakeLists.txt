@@ -1,0 +1,31 @@
+cmake_minimum_required(VERSION 3.16)
+project(dufos CXX)
+
+set(VCPKG_MANIFEST_MODE ON)
+
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+
+set(NETWORK_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../network)
+set(COMMON_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../common)
+
+add_subdirectory(${NETWORK_DIRECTORY} network)
+
+set(CLIENT_EXECUTABLE dufos_client)
+
+file(GLOB_RECURSE CLIENT_SOURCES src/*.cpp)
+
+list(REMOVE_ITEM CLIENT_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/test_main.cpp")
+
+message(STATUS "Client sources: ${CLIENT_SOURCES}")
+
+add_executable(${CLIENT_EXECUTABLE} ${CLIENT_SOURCES})
+
+target_include_directories(${CLIENT_EXECUTABLE} PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<BUILD_INTERFACE:${NETWORK_DIRECTORY}/include>
+    $<BUILD_INTERFACE:${COMMON_DIRECTORY}/include>
+)
+
+target_link_libraries(${CLIENT_EXECUTABLE} PUBLIC network)
