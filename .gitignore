@@ -36,7 +36,8 @@
 *.exe
 *.out
 *.app
-dufos
+dufos_server
+dufos_client
 
 # debug information files
 *.dwo
