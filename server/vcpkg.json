@@ -1,0 +1,6 @@
+{
+    "name": "dufos-client",
+    "dependencies": [
+        "libsodium"
+    ]
+}
