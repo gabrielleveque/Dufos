@@ -19,7 +19,7 @@ bool Dufos::Message::Message::sendMessage(Name name, Server& server, std::uint32
     try {
         bool success = false;
 
-        if (_messages.find(name) == _messages.end() || !_messages[name] || _messages[name]->getType() != IMessage::Type::TO_EXECUTE) {
+        if (_messages.find(name) == _messages.end() || !_messages[name] || !_messages[name]->getType().contains(IMessage::Type::TO_EXECUTE)) {
             return false;
         }
         success = _messages[name]->execute(server, id);
@@ -35,7 +35,7 @@ bool Dufos::Message::Message::recvMessage(Network::Data::Message& message, Serve
         Name name = static_cast<Name>(message.opcode);
         bool success = false;
 
-        if (_messages.find(name) == _messages.end() || !_messages[name] || _messages[name]->getType() != IMessage::Type::TO_PROCESS) {
+        if (_messages.find(name) == _messages.end() || !_messages[name] || !_messages[name]->getType().contains(IMessage::Type::TO_PROCESS)) {
             return false;
         }
         success = _messages[name]->process(message, server, id);

@@ -14,7 +14,7 @@
 
 Dufos::Message::Welcome::Welcome()
 {
-    _type = IMessage::Type::TO_EXECUTE;
+    _types = {IMessage::Type::TO_EXECUTE};
 }
 
 bool Dufos::Message::Welcome::execute(Server& server, std::uint32_t id)

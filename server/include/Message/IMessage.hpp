@@ -10,6 +10,7 @@
 #include "NetworkManager.hpp"
 
 #include <cstdint>
+#include <set>
 
 namespace Dufos
 {
@@ -37,9 +38,9 @@ namespace Dufos
                 /**
                  * @brief Get the type of the message
                  *
-                 * @return MessageType The type of the message
+                 * @return std::set<Type> The types of the message
                  */
-                virtual Type getType() const = 0;
+                virtual std::set<Type> getType() const = 0;
 
                 /**
                  * @brief Execute the message

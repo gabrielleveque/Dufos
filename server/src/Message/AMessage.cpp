@@ -8,9 +8,9 @@
 #include "Message/AMessage.hpp"
 #include "Bytes.hpp"
 
-Dufos::Message::AMessage::Type Dufos::Message::AMessage::getType() const
+std::set<Dufos::Message::AMessage::Type> Dufos::Message::AMessage::getType() const
 {
-    return _type;
+    return _types;
 }
 
 bool Dufos::Message::AMessage::execute(Server& server, std::uint32_t id)
