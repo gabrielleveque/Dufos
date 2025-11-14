@@ -45,3 +45,4 @@ dufos_client
 # Miscellaneous
 .vscode
 build
+.env
