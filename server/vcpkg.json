@@ -1,6 +1,7 @@
 {
     "name": "dufos-client",
     "dependencies": [
-        "libsodium"
+        "libsodium",
+        "mongo-cxx-driver"
     ]
 }

@@ -9,6 +9,7 @@ set(NETWORK_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../network)
 set(COMMON_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../common)
 
 find_package(unofficial-sodium CONFIG REQUIRED)
+find_package(mongocxx CONFIG REQUIRED)
 
 add_subdirectory(${NETWORK_DIRECTORY} network)
 
@@ -25,3 +26,4 @@ target_include_directories(${SERVER_EXECUTABLE} PUBLIC
 )
 
 target_link_libraries(${SERVER_EXECUTABLE} PUBLIC network unofficial-sodium::sodium)
+target_link_libraries(${SERVER_EXECUTABLE} PRIVATE $<IF:$<TARGET_EXISTS:mongo::mongocxx_static>,mongo::mongocxx_static,mongo::mongocxx_shared>)
