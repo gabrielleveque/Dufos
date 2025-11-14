@@ -5,12 +5,12 @@ services:
     container_name: dofus-db
     restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: "root"
-      MONGO_INITDB_ROOT_PASSWORD: "example"
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_ROOT_PASSWORD}
     volumes:
       - mongo_data:/data/db
     ports:
-      - "27017:27017"
+      - "${MONGODB_PORT}:${MONGODB_PORT}"
 
 volumes:
   mongo_data:
