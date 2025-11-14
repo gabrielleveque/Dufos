@@ -1,6 +1,7 @@
 
 #include "NetworkManager.hpp"
 #include "Server.hpp"
+#include "Env.hpp"
 
 #include <sodium.h>
 #include <iostream>
@@ -11,6 +12,7 @@ int main(void)
         if (sodium_init() < 0) {
             throw std::runtime_error("Failed to initialize libsodium");
         }
+        Dufos::Env::loadEnv();
         Dufos::Server server(LOCALHOST, 8080);
 
         server.run();
