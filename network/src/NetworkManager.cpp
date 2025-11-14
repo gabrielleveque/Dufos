@@ -29,6 +29,9 @@ void Network::NetworkManager::initialize(Enum::Connection::Side side)
     if (side == Enum::Connection::Side::CLIENT) {
         _client.clientPort = getAvailablePort();
     }
+    if (side == Enum::Connection::Side::SERVER) {
+        _server.nextClientId = 1;
+    }
     _side = side;
     _mainThread = std::thread(&NetworkManager::run, this);
 }
