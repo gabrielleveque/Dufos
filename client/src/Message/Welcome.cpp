@@ -14,7 +14,7 @@
 
 Dufos::Message::Welcome::Welcome()
 {
-    _type = IMessage::Type::TO_PROCESS;
+    _types = {IMessage::Type::TO_PROCESS};
 }
 
 bool Dufos::Message::Welcome::process(Network::Data::Message& message, Client& client, std::uint32_t id)

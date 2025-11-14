@@ -27,9 +27,9 @@ namespace Dufos::Message
             /**
              * @brief Get the type of the message
              *
-             * @return MessageType The type of the message
+             * @return std::set<Type> The types of the message
              */
-            Type getType() const;
+            std::set<Type> getType() const;
 
             /**
              * @brief Execute the message
@@ -57,6 +57,6 @@ namespace Dufos::Message
              */
             void setMessageSize(std::vector<std::uint8_t>& msg, std::uint32_t size);
 
-            Type _type; /*!> The type of the message (to execute or to process) */
+            std::set<Type> _types; /*!> The types of the message (to execute or to process) */
     };
 }
