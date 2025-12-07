@@ -1,0 +1,22 @@
+cmake_minimum_required(VERSION 3.16)
+project(dufos CXX)
+
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+
+set(COMMON_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../common)
+
+set(NETWORK_LIB_NAME network)
+
+file(GLOB_RECURSE NETWORK_SOURCES src/*.cpp)
+
+
+add_library(${NETWORK_LIB_NAME} STATIC ${NETWORK_SOURCES})
+
+target_include_directories(${NETWORK_LIB_NAME} PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<BUILD_INTERFACE:${COMMON_DIRECTORY}/include>
+)
+
+target_link_libraries(${NETWORK_LIB_NAME} PUBLIC common)
